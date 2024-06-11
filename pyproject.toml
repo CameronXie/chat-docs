@@ -1,0 +1,80 @@
+[tool.poetry]
+name = "chat-docs"
+version = "0.1.0"
+description = "A chatbot, utilizing private Large Language Models (LLMs), designed for question-answering on private documents, available through a web app."
+authors = ["Cameron Xie"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+chainlit = "^1.1.202"
+langchain = "^0.2.3"
+langchain-community = "^0.2.4"
+pypdf = "^4.2.0"
+pydantic-settings = "^2.3.1"
+pydantic = "^2.7.3"
+langchain-milvus = "^0.1.1"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.4.8"
+mypy = "^1.10.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+src = ["src"]
+line-length = 120
+fix = true
+unsafe-fixes = true
+
+[tool.ruff.lint]
+select = [
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "D",   # pydocstyle
+    "ERA", # flake8-eradicate/eradicate
+    "F",   # Pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "PGH", # pygrep
+    "PIE", # flake8-pie
+    "PL",  # Pylint
+    "RUF", # ruff checks
+    "SIM", # flake8-simplify
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "UP",  # pyupgrade
+]
+ignore = [
+    "D100",   # Missing docstring in public module
+    "D104",   # Missing docstring in public package
+    "D107",   # Missing docstring in `__init__`
+    "D211",   # No blank lines allowed before class docstring
+    "D213",   # Multi-line docstring summary should start at the second line
+    "TID252", # Prefer absolute imports over relative imports from parent modules
+]
+
+[tool.mypy]
+mypy_path = "./src"
+exclude = ["dist"]
+strict = true
+show_error_codes = true
+pretty = true
+local_partial_types = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = [
+    "config.*",
+    "conversation.*",
+    "document_processor.*",
+    "session_store.*"
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "chat_docs.main"
+disallow_untyped_decorators = false
+disallow_untyped_calls = false

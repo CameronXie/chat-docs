@@ -1,0 +1,12 @@
+name: Test
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run type checking, linting, and unit tests.
+        run: make ci-test
